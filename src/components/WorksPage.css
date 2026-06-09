@@ -1,0 +1,237 @@
+.works-portfolio-page {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-color);
+  transition: background-color 0.5s ease;
+}
+
+.works-portfolio-container {
+  flex: 1;
+  padding: 120px 5% 60px 5%; /* Top padding to account for fixed navbar */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.works-card {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #333; /* Fallback */
+}
+
+/* Base Image Setup */
+.card-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s ease, filter 0.8s ease;
+}
+
+.grayscale {
+  filter: grayscale(100%) contrast(1.2) brightness(0.8);
+}
+
+.works-card:hover .card-img {
+  transform: scale(1.05);
+  filter: grayscale(50%) contrast(1.1) brightness(0.9);
+}
+
+/* Geometric Shapes Overlays */
+.card-shape {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  mix-blend-mode: multiply; /* Blend shape colors with image nicely */
+  opacity: 0.85;
+  transition: opacity 0.5s ease;
+}
+
+.works-card:hover .card-shape {
+  opacity: 0.95;
+}
+
+/* Shape 1: Orange Square */
+.shape-square-orange {
+  background-color: #f2982d;
+  clip-path: polygon(0 20%, 65% 20%, 65% 100%, 0 100%);
+}
+
+/* Shape 2: Cyan Circle (using radial gradient as an easy circle overlay) */
+.shape-circle-cyan {
+  background: radial-gradient(circle at 20% 20%, #3bc6c3 0%, #3bc6c3 50%, transparent 50.5%);
+}
+
+/* Shape 3: Blue Triangle */
+.shape-triangle-blue {
+  background-color: #4e7ab5;
+  clip-path: polygon(100% 100%, 100% 0%, 50% 100%);
+}
+
+/* Shape 4: Pink Triangle */
+.shape-triangle-pink {
+  background-color: #e64390;
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+
+/* Content Setup */
+.card-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: white;
+  pointer-events: none; /* Let hover trigger on the card */
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-small-text {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.8;
+}
+
+.card-dots {
+  display: flex;
+  gap: 4px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  background-color: white;
+  border-radius: 50%;
+}
+
+.card-main {
+  margin-top: auto;
+  margin-bottom: 30px;
+  max-width: 80%;
+}
+
+.card-number {
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.card-title {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1;
+  font-weight: 900;
+  margin-bottom: 5px;
+  text-transform: capitalize;
+}
+
+.card-subtitle {
+  font-size: clamp(1.2rem, 2vw, 2rem);
+  font-weight: 700;
+  margin-bottom: 15px;
+  text-transform: lowercase;
+}
+
+.card-subtitle::first-letter {
+  text-transform: uppercase;
+}
+
+.card-desc {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+.card-footer {
+  text-align: right;
+}
+
+/* Decorative Texts */
+.card-vertical-text {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg) translateY(-50%);
+  transform-origin: right center;
+  font-size: 4rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+  letter-spacing: 5px;
+}
+
+.card-hollow-text {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  font-size: 4rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+  letter-spacing: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .works-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .card-content {
+    padding: 20px;
+  }
+  
+  .card-vertical-text {
+    font-size: 3rem;
+  }
+  
+  .card-hollow-text {
+    font-size: 3rem;
+  }
+}
+
+/* Theme Adjustments (Since cards have images, they usually look fine in both themes, but just in case) */
+.light-theme .works-card {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.dark-theme .works-card {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}

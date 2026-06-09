@@ -1,0 +1,205 @@
+.experience-page {
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.5s ease, color 0.5s ease;
+  overflow-x: hidden;
+}
+
+.roadmap-main {
+  padding-top: 120px;
+  padding-bottom: 100px;
+}
+
+.roadmap-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.roadmap-title {
+  font-size: 50px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  margin-bottom: 10px;
+}
+
+.roadmap-subtitle {
+  font-size: 1.5rem;
+  color: var(--accent-color);
+}
+
+/* Roadmap Layout */
+.roadmap-container {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 50px 0;
+}
+
+.roadmap-svg-wrapper {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  /* Width of the curve spread */
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.roadmap-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.roadmap-nodes-container {
+  display: flex;
+  flex-direction: column;
+  gap: 200px;
+  /* Vertical spacing between nodes to match curve peaks */
+  position: relative;
+  z-index: 2;
+}
+
+.roadmap-node-wrapper {
+  position: relative;
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.roadmap-node-wrapper.align-left {
+  justify-content: flex-start;
+}
+
+.roadmap-node-wrapper.align-right {
+  justify-content: flex-end;
+}
+
+/* The Card */
+.roadmap-card {
+  width: 40%;
+  background: var(--card-bg, rgba(150, 150, 150, 0.05));
+  padding: 30px;
+  border-radius: 12px;
+  border: 1px solid rgba(150, 150, 150, 0.1);
+  backdrop-filter: blur(10px);
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.studio-mode .roadmap-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.roadmap-year {
+  display: inline-block;
+  font-size: 1.2rem;
+  color: var(--accent-color);
+  margin-bottom: 5px;
+}
+
+.roadmap-role {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 5px;
+  line-height: 1.2;
+}
+
+.roadmap-company {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 0.6;
+  margin-bottom: 15px;
+}
+
+.roadmap-desc {
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+/* The Dot on the path */
+.roadmap-dot {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  background-color: var(--bg-color);
+  border: 3px solid var(--accent-color);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.align-left .roadmap-dot {
+  right: calc(10% - 15px);
+  /* Positioned to match the right peak of the SVG */
+}
+
+.align-right .roadmap-dot {
+  left: calc(10% - 15px);
+  /* Positioned to match the left peak of the SVG */
+}
+
+.dot-inner {
+  width: 10px;
+  height: 10px;
+  background-color: var(--accent-color);
+  border-radius: 50%;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .roadmap-svg-wrapper {
+    left: 20px;
+    transform: none;
+    width: 100px;
+  }
+
+  .roadmap-svg {
+    /* Straighten out or hide curves for mobile, just use a straight line */
+    display: none;
+  }
+
+  .roadmap-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 30px;
+    width: 2px;
+    height: 100%;
+    background: var(--accent-color);
+    opacity: 0.5;
+  }
+
+  .roadmap-nodes-container {
+    gap: 50px;
+    padding-left: 60px;
+    padding-right: 20px;
+  }
+
+  .roadmap-node-wrapper.align-left,
+  .roadmap-node-wrapper.align-right {
+    justify-content: flex-start;
+  }
+
+  .roadmap-card {
+    width: 100%;
+  }
+
+  .roadmap-dot,
+  .align-left .roadmap-dot,
+  .align-right .roadmap-dot {
+    left: -45px;
+    right: auto;
+  }
+}
