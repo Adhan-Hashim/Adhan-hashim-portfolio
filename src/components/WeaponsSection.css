@@ -1,0 +1,106 @@
+.weapons-section {
+  position: relative;
+  width: 100%;
+  padding: 100px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: transparent;
+  z-index: 5;
+}
+
+.weapons-title {
+  font-family: var(--font-heading, sans-serif);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+.weapons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 40px;
+  width: 100%;
+  max-width: 900px;
+  padding: 0 20px;
+  justify-content: center;
+}
+
+.weapon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+  padding: 20px;
+  border-radius: 12px;
+  transition: background 0.3s ease;
+}
+
+.weapon-item:hover {
+  background: rgba(150, 150, 150, 0.05);
+}
+
+.studio-mode .weapon-item:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.weapon-icon {
+  width: 48px;
+  height: 48px;
+  transition: transform 0.3s ease;
+}
+
+.weapon-item:hover .weapon-icon {
+  transform: scale(1.1);
+}
+
+.weapon-icon.generated {
+  border-radius: 8px;
+}
+
+.weapon-icon.generated.dark {
+  filter: invert(1) contrast(1.2);
+  mix-blend-mode: screen;
+}
+
+.weapon-icon.generated.light {
+  filter: invert(0) contrast(1.2);
+  mix-blend-mode: multiply;
+}
+
+.weapon-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  opacity: 0.6;
+  text-transform: uppercase;
+  transition: opacity 0.3s ease;
+}
+
+.weapon-item:hover .weapon-name {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .weapons-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .weapon-icon {
+    width: 36px;
+    height: 36px;
+  }
+  .weapon-name {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .weapons-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

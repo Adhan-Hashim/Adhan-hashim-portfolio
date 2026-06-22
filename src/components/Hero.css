@@ -1,0 +1,138 @@
+.hero-portrait {
+  position: absolute;
+  right: 5%;
+  bottom: 10%;
+  width: clamp(300px, 40vw, 600px);
+  z-index: 5;
+}
+
+.hero-subtitle-container {
+  position: absolute;
+  top: -40px;
+  left: var(--hero-subtitle-left, 30%);
+  pointer-events: none;
+}
+
+.hero-title {
+  font-size: var(--hero-title-size, clamp(5rem, 15vw, 12rem));
+  margin: 0;
+  line-height: 0.8;
+  font-weight: 900;
+  color: var(--text-color);
+}
+
+.hero-desc {
+  max-width: 600px;
+  font-size: 1.2rem;
+  margin-top: 40px;
+  line-height: 1.6;
+  color: var(--muted-text);
+}
+
+.hero-footer {
+  position: absolute;
+  bottom: 50px;
+  left: 10%;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: 100svh !important;
+    padding: 0 !important;
+    display: block !important;
+    position: relative !important;
+    overflow: hidden;
+  }
+
+  .hero-portrait {
+    position: absolute !important;
+    top: 38% !important; /* Move image slightly up */
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 90vw !important; /* Keep it nicely within screen */
+    max-width: 500px !important;
+    right: auto !important;
+    bottom: auto !important;
+    margin: 0 !important;
+    z-index: 1 !important;
+  }
+
+  /* Make the image a circle in mobile to match the reference */
+  .hero-portrait img {
+    border-radius: 50% !important;
+    /* Optional: keep the fade, it looks good with the circle */
+  }
+
+  .hero > div:first-child {
+    /* Text Container */
+    position: absolute !important;
+    top: 68% !important; /* Position exactly at the bottom edge of the image */
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    z-index: 10 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .hero-title {
+    font-size: 21vw !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .hero-title > div {
+    /* EyeO container */
+    width: 16vw !important;
+    height: 16vw !important;
+    margin: 0 1vw !important;
+  }
+
+  .hero-subtitle-container {
+    position: absolute !important;
+    top: -65px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    margin: 0 !important;
+  }
+  
+  .hero-subtitle-container .sketch-text {
+    font-size: 1.2rem !important;
+    margin-bottom: -5px;
+    white-space: nowrap !important;
+  }
+
+  .hero-subtitle-container svg {
+    transform: rotate(90deg) !important;
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+  .hero-desc {
+    text-align: center !important;
+    font-size: 0.95rem !important;
+    padding: 0 15px !important;
+    margin-top: 15px !important;
+    max-width: 90% !important;
+    line-height: 1.5 !important;
+  }
+
+  .hero-footer {
+    position: absolute !important;
+    left: auto !important;
+    right: 20px !important;
+    bottom: 20px !important;
+    transform: none !important;
+  }
+}

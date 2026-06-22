@@ -143,7 +143,7 @@ const ScribbleButton = ({
         </defs>
       </svg>
 
-      <span style={{ position: 'relative', zIndex: 1 }}>
+      <span style={{ position: 'relative', zIndex: 1, whiteSpace: 'nowrap' }}>
         {typeof children === 'string' ? (
           <div style={{ display: 'inline-flex', overflow: 'hidden' }}>
             {children.split('').map((char, i) => (

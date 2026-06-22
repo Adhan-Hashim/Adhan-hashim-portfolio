@@ -131,11 +131,15 @@
 
 /* NEW DESIGN: SPLIT LAYOUT */
 .about-new-layout {
-  display: flex;
-  gap: 80px;
   padding: 0 5%;
   margin-bottom: 120px;
+}
+
+.about-columns-container {
+  display: flex;
+  gap: 80px;
   align-items: flex-start;
+  width: 100%;
 }
 
 /* LEFT: STICKY VIDEO */
@@ -143,6 +147,9 @@
   flex: 0 0 40%;
   position: sticky;
   top: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 /* ID CARD V4 - Premium Ribbon Badge */
@@ -437,7 +444,7 @@
 /* BENTO GRID */
 .about-bento-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 20px;
 }
 
@@ -639,11 +646,79 @@
 }
 
 
+/* HELPERS FOR NEW LAYOUT STRUCTURE */
+.education-list-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-top: 10px;
+}
+
+.education-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.education-icon-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(150, 150, 150, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.education-icon-circle span {
+  font-size: 1.2rem;
+}
+
+.edu-title {
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.edu-sub {
+  opacity: 0.7;
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+
+.edu-status.ongoing {
+  font-size: 0.8rem;
+  color: var(--accent-color);
+  letter-spacing: 1px;
+}
+
+.edu-status.completed {
+  font-size: 0.8rem;
+  opacity: 0.5;
+  letter-spacing: 1px;
+}
+
+.education-divider {
+  height: 1px;
+  width: 100%;
+  background: rgba(150, 150, 150, 0.1);
+}
+
+.mobile-only {
+  display: none !important;
+}
+
+.desktop-only {
+  display: block !important;
+}
+
+
 /* RESPONSIVE DESIGN */
 @media (max-width: 1024px) {
-  .about-new-layout {
+  .about-columns-container {
     flex-direction: column;
     align-items: center;
+    gap: 40px;
   }
 
   .about-left-col {
@@ -663,15 +738,138 @@
 }
 
 @media (max-width: 768px) {
-  .about-bento-grid {
-    grid-template-columns: 1fr;
+  .letter-fill, .letter-stroke, .letter-placeholder {
+    font-size: 28vw;
+  }
+
+  .hero-typography {
+    height: 35vw;
+  }
+
+  .hero-illustration-container {
+    margin-top: -15vw !important;
+  }
+
+  .hero-illustration {
+    max-width: 60%;
   }
 
   .github-glass-container {
+    width: 100%;
     padding: 30px 20px;
+  }
+
+  .about-bento-grid {
+    grid-template-columns: 1fr;
   }
   
   .github-title-new {
     font-size: 1.5rem;
+  }
+
+  /* SIDE-BY-SIDE MOBILE LAYOUT FOR ID CARD & EDUCATION */
+  .mobile-only {
+    display: block !important;
+  }
+
+  .desktop-only {
+    display: none !important;
+  }
+
+  .about-new-layout {
+    margin-bottom: 60px;
+  }
+
+  .about-columns-container {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 30px;
+  }
+
+  .about-left-col {
+    width: 40%;
+    max-width: none;
+    flex: none;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+    top: 0;
+  }
+
+  .about-right-col {
+    width: 58%;
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* miniature id card body scale to fit next to education card */
+  .id-card-wrapper-v4 {
+    width: 100%;
+    height: 280px;
+    transform: scale(0.40);
+    transform-origin: top center;
+    margin-top: 25px;
+    perspective: none; /* prevent 3D clipping at miniature scale */
+  }
+
+  .bento-card {
+    padding: 15px 12px;
+    border-radius: 12px;
+  }
+
+  .bento-title {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+  }
+
+  .education-list-wrapper {
+    gap: 15px;
+  }
+
+  .education-icon-circle {
+    width: 28px;
+    height: 28px;
+    margin-bottom: 8px;
+  }
+
+  .education-icon-circle span {
+    font-size: 0.9rem;
+  }
+
+  .edu-title {
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+    font-weight: 700;
+  }
+
+  .edu-sub {
+    font-size: 0.75rem;
+    margin-bottom: 4px;
+  }
+
+  .edu-status {
+    font-size: 0.7rem !important;
+  }
+
+  .new-bio-heading {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    text-align: left;
+    letter-spacing: -0.5px;
+  }
+
+  .new-bio-paragraph {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    text-align: left;
+    font-weight: 400;
   }
 }

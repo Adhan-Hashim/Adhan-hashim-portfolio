@@ -6,8 +6,9 @@ import Navbar from './components/Navbar'
 import GuitarBackground from './components/GuitarBackground'
 import Hero from './components/Hero'
 import Work from './components/Work'
-import Experience from './components/Experience'
 import ToolsSection from './components/ToolsSection'
+import Experience from './components/Experience'
+
 import Cursor from './components/Cursor'
 import CreativeMarquee from './components/CreativeMarquee'
 import WorksPage from './components/WorksPage'
@@ -20,9 +21,8 @@ import SongCarousel from './components/SongCarousel'
 import GlassPlayerBar from './components/GlassPlayerBar'
 
 
-const HomePage = ({ isStudio, setIsStudio, isSadMode, setIsSadMode, isPlaying, setIsPlaying, currentSongIndex, setCurrentSongIndex, audioTime, setAudioTime, hasSeenIntro, setHasSeenIntro }) => {
+const HomePage = ({ isStudio, setIsStudio, isSadMode, setIsSadMode, isPlaying, setIsPlaying, currentSongIndex, setCurrentSongIndex, audioTime, setAudioTime, hasSeenIntro, setHasSeenIntro, setIsLabInView, audioRef }) => {
   const labRef = useRef(null);
-  const [isLabInView, setIsLabInView] = useState(true);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -30,11 +30,13 @@ const HomePage = ({ isStudio, setIsStudio, isSadMode, setIsSadMode, isPlaying, s
       { threshold: 0.1 }
     );
     if (labRef.current) observer.observe(labRef.current);
-    return () => observer.disconnect();
-  }, []);
+    return () => {
+      observer.disconnect();
+      setIsLabInView(false);
+    };
+  }, [setIsLabInView]);
 
   const showControls = isSadMode && (hasSeenIntro || audioTime > 22);
-  const showFloatingPlayer = isSadMode && !isLabInView && isSadMode; 
 
   const textVariants = {
     hidden: { y: 150, opacity: 0 },
@@ -49,7 +51,7 @@ const HomePage = ({ isStudio, setIsStudio, isSadMode, setIsSadMode, isPlaying, s
       <Hero isStudio={isStudio} isSadMode={isSadMode} />
       <Work />
       <ToolsSection isStudio={isStudio} isSadMode={isSadMode} />
-      <Experience />
+      <Experience isStudio={isStudio} isSadMode={isSadMode} />
       <CreativeMarquee />
 
       {/* FOOTER GUITAR SECTION (THE LAB) */}
@@ -64,6 +66,7 @@ const HomePage = ({ isStudio, setIsStudio, isSadMode, setIsSadMode, isPlaying, s
           currentTime={audioTime}
           onTimeUpdate={setAudioTime}
           hasSeenIntro={hasSeenIntro}
+          audioRef={audioRef}
         />
 
         <motion.div 
@@ -239,6 +242,120 @@ const HomePage = ({ isStudio, setIsStudio, isSadMode, setIsSadMode, isPlaying, s
       </section>
 
       <Footer />
+    </main>
+  );
+};
+
+const MainLayout = () => {
+  const [isStudio, setIsStudio] = useState(false);
+  const [isSadMode, setIsSadMode] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentSongIndex, setCurrentSongIndex] = useState(0);
+  const [audioTime, setAudioTime] = useState(0);
+  const [hasSeenIntro, setHasSeenIntro] = useState(false);
+  const [isLabInView, setIsLabInView] = useState(true);
+
+  const audioRef = useRef(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!audioRef.current) {
+      audioRef.current = new Audio(SONGS[currentSongIndex].url);
+      audioRef.current.loop = false;
+      audioRef.current.onended = () => {
+        setIsPlaying(false);
+      };
+    }
+    
+    const audio = audioRef.current;
+    
+    const tick = () => {
+      setAudioTime(audio.currentTime);
+    };
+
+    audio.addEventListener('timeupdate', tick);
+    
+    const currentSong = SONGS[currentSongIndex];
+    if (audio.src !== window.location.origin + currentSong.url) {
+      const wasPlaying = !audio.paused;
+      audio.src = currentSong.url;
+      audio.load();
+      if (wasPlaying || isPlaying) {
+        audio.currentTime = 0;
+        audio.play().catch(e => console.error("Audio blocked", e));
+      }
+    }
+    
+    if (isPlaying) {
+      if (currentSong.id === 1 && audio.currentTime < 1) {
+         audio.currentTime = 15;
+      }
+      audio.play().catch(e => console.error("Audio blocked", e));
+    } else {
+      audio.pause();
+    }
+
+    return () => {
+      audio.removeEventListener('timeupdate', tick);
+    };
+  }, [isPlaying, currentSongIndex, setIsPlaying, setAudioTime]);
+
+  useEffect(() => {
+    if (isStudio) {
+      document.body.classList.add('studio-mode');
+    } else {
+      document.body.classList.remove('studio-mode');
+    }
+  }, [isStudio]);
+
+  useEffect(() => {
+    if (audioTime > 22 && isSadMode) {
+      setHasSeenIntro(true);
+    }
+  }, [audioTime, isSadMode]);
+
+  const showFloatingPlayer = isSadMode && (location.pathname !== '/' || !isLabInView);
+  const isSadVisuals = isSadMode && location.pathname === '/';
+
+  return (
+    <>
+      <Cursor isSadMode={isSadVisuals} />
+
+      <motion.div
+        animate={{ opacity: isSadVisuals ? 1 : 0 }}
+        transition={{ duration: 1.2, ease: 'easeInOut' }}
+        style={{
+          position: 'fixed',
+          inset: 0,
+          background: 'radial-gradient(ellipse at 50% 40%, rgba(120,0,0,0.35) 0%, rgba(40,0,0,0.55) 100%)',
+          pointerEvents: 'none',
+          zIndex: 9998,
+        }}
+      />
+
+      <SmoothScroll>
+        <div className={`app-container ${isStudio ? 'studio-mode' : ''} ${isSadVisuals ? 'sad-mode-active' : ''}`} style={{ backgroundColor: 'var(--bg-color)', color: 'var(--text-color)', transition: 'var(--transition-color), filter 1.5s ease' }}>
+          <Navbar isStudio={isStudio} toggleStudio={() => setIsStudio(!isStudio)} isSadMode={isSadVisuals} isPlaying={isPlaying} />
+          
+          <Routes>
+            <Route path="/" element={
+              <HomePage 
+                isStudio={isStudio} setIsStudio={setIsStudio}
+                isSadMode={isSadMode} setIsSadMode={setIsSadMode}
+                isPlaying={isPlaying} setIsPlaying={setIsPlaying}
+                currentSongIndex={currentSongIndex} setCurrentSongIndex={setCurrentSongIndex}
+                audioTime={audioTime} setAudioTime={setAudioTime}
+                hasSeenIntro={hasSeenIntro} setHasSeenIntro={setHasSeenIntro}
+                setIsLabInView={setIsLabInView} audioRef={audioRef}
+              />
+            } />
+            <Route path="/works" element={<WorksPage isStudio={isStudio} toggleStudio={() => setIsStudio(!isStudio)} isSadMode={isSadMode} isPlaying={isPlaying} />} />
+            <Route path="/works/:sectionId" element={<WorksSectionPage isStudio={isStudio} toggleStudio={() => setIsStudio(!isStudio)} isSadMode={isSadMode} isPlaying={isPlaying} />} />
+            <Route path="/experience" element={<ExperiencePage isStudio={isStudio} toggleStudio={() => setIsStudio(!isStudio)} isSadMode={isSadMode} isPlaying={isPlaying} />} />
+            <Route path="/about" element={<AboutPage isStudio={isStudio} toggleStudio={() => setIsStudio(!isStudio)} isSadMode={isSadMode} isPlaying={isPlaying} />} />
+          </Routes>
+        </div>
+      </SmoothScroll>
 
       <AnimatePresence>
         {showFloatingPlayer && (
@@ -265,70 +382,14 @@ const HomePage = ({ isStudio, setIsStudio, isSadMode, setIsSadMode, isPlaying, s
           </div>
         )}
       </AnimatePresence>
-    </main>
-  );
-};
+    </>
+  )
+}
 
 function App() {
-  const [isStudio, setIsStudio] = useState(false);
-  const [isSadMode, setIsSadMode] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentSongIndex, setCurrentSongIndex] = useState(0);
-  const [audioTime, setAudioTime] = useState(0);
-  const [hasSeenIntro, setHasSeenIntro] = useState(false);
-
-  useEffect(() => {
-    if (isStudio) {
-      document.body.classList.add('studio-mode');
-    } else {
-      document.body.classList.remove('studio-mode');
-    }
-  }, [isStudio]);
-
-  useEffect(() => {
-    if (audioTime > 22 && isSadMode) {
-      setHasSeenIntro(true);
-    }
-  }, [audioTime, isSadMode]);
-
   return (
     <Router>
-      <Cursor isSadMode={isSadMode} />
-
-      <motion.div
-        animate={{ opacity: isSadMode ? 1 : 0 }}
-        transition={{ duration: 1.2, ease: 'easeInOut' }}
-        style={{
-          position: 'fixed',
-          inset: 0,
-          background: 'radial-gradient(ellipse at 50% 40%, rgba(120,0,0,0.35) 0%, rgba(40,0,0,0.55) 100%)',
-          pointerEvents: 'none',
-          zIndex: 9998,
-        }}
-      />
-
-      <SmoothScroll>
-        <div className={`app-container ${isStudio ? 'studio-mode' : ''} ${isSadMode ? 'sad-mode-active' : ''}`} style={{ backgroundColor: 'var(--bg-color)', color: 'var(--text-color)', transition: 'var(--transition-color), filter 1.5s ease' }}>
-          <Navbar isStudio={isStudio} toggleStudio={() => setIsStudio(!isStudio)} isSadMode={isSadMode} isPlaying={isPlaying} />
-          
-          <Routes>
-            <Route path="/" element={
-              <HomePage 
-                isStudio={isStudio} setIsStudio={setIsStudio}
-                isSadMode={isSadMode} setIsSadMode={setIsSadMode}
-                isPlaying={isPlaying} setIsPlaying={setIsPlaying}
-                currentSongIndex={currentSongIndex} setCurrentSongIndex={setCurrentSongIndex}
-                audioTime={audioTime} setAudioTime={setAudioTime}
-                hasSeenIntro={hasSeenIntro} setHasSeenIntro={setHasSeenIntro}
-              />
-            } />
-            <Route path="/works" element={<WorksPage isStudio={isStudio} toggleStudio={() => setIsStudio(!isStudio)} isSadMode={isSadMode} isPlaying={isPlaying} />} />
-            <Route path="/works/:sectionId" element={<WorksSectionPage isStudio={isStudio} toggleStudio={() => setIsStudio(!isStudio)} isSadMode={isSadMode} isPlaying={isPlaying} />} />
-            <Route path="/experience" element={<ExperiencePage isStudio={isStudio} toggleStudio={() => setIsStudio(!isStudio)} isSadMode={isSadMode} isPlaying={isPlaying} />} />
-            <Route path="/about" element={<AboutPage isStudio={isStudio} toggleStudio={() => setIsStudio(!isStudio)} isSadMode={isSadMode} isPlaying={isPlaying} />} />
-          </Routes>
-        </div>
-      </SmoothScroll>
+      <MainLayout />
     </Router>
   )
 }

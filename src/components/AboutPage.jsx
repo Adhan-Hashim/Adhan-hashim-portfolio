@@ -273,12 +273,21 @@ const AboutPage = ({ isStudio, toggleStudio, isSadMode, isPlaying }) => {
     offset: ["start start", "end start"]
   });
 
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   // Creative Parallax: Letters spreading horizontally
-  const xA = useTransform(scrollYProgress, [0, 1], [0, -120]);
-  const xB = useTransform(scrollYProgress, [0, 1], [0, -60]);
+  const spreadX = isMobile ? 35 : 120;
+  const xA = useTransform(scrollYProgress, [0, 1], [0, -spreadX]);
+  const xB = useTransform(scrollYProgress, [0, 1], [0, -spreadX / 2]);
   const xO = useTransform(scrollYProgress, [0, 1], [0, 0]);
-  const xU = useTransform(scrollYProgress, [0, 1], [0, 60]);
-  const xT = useTransform(scrollYProgress, [0, 1], [0, 120]);
+  const xU = useTransform(scrollYProgress, [0, 1], [0, spreadX / 2]);
+  const xT = useTransform(scrollYProgress, [0, 1], [0, spreadX]);
 
   // Vertical Parallax for the whole typography group and image
   const yText = useTransform(scrollYProgress, [0, 1], [0, -50]);
@@ -339,40 +348,51 @@ const AboutPage = ({ isStudio, toggleStudio, isSadMode, isPlaying }) => {
 
         {/* NEW DESIGN: SPLIT LAYOUT */}
         <section className="about-new-layout">
-          {/* LEFT: STICKY VIDEO */}
-          <div className="about-left-col" style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start' }}>
-            <IDCard />
+          {/* BIO TEXT - Visible on mobile at top, hidden on desktop */}
+          <div className="about-text-block mobile-only">
+            <h2 className="new-bio-heading">HI, I'M ADHAN.</h2>
+            <p className="new-bio-paragraph">
+              Computer Science student at the College of Engineering Vadakara (CEV) with a passion for design and video editing. Currently serving as Media Lead at IEEE SB CEV, and working as both Video Editor and Design Team Member at IEEE EdSoc Kerala Chapter, along with Made Web's. Skilled in Figma and Canva for UI/UX design, prototyping, and creating visually compelling content. Experienced in Adobe Premiere Pro and CapCut Pro for video editing, delivering impactful media that merges storytelling with clean, user-centered design.
+            </p>
           </div>
 
-          {/* RIGHT: CONTENT */}
-          <div className="about-right-col">
-            <div className="about-text-block">
-              <h2 className="new-bio-heading">HI, I'm Adhan.</h2>
-              <p className="new-bio-paragraph">
-                Computer Science student at the College of Engineering Vadakara (CEV) with a passion for design and video editing. Currently serving as Media Lead at IEEE SB CEV, and working as both Video Editor and Design Team Member at IEEE EdSoc Kerala Chapter, along with Made Web's. Skilled in Figma and Canva for UI/UX design, prototyping, and creating visually compelling content. Experienced in Adobe Premiere Pro and CapCut Pro for video editing, delivering impactful media that merges storytelling with clean, user-centered design.
-              </p>
+          <div className="about-columns-container">
+            {/* LEFT: STICKY VIDEO / ID CARD */}
+            <div className="about-left-col">
+              <IDCard />
             </div>
 
-            <div className="about-bento-grid" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '20px' }}>
-              {/* EDUCATION */}
-              <div className="bento-card education-bento" style={{ display: 'flex', flexDirection: 'column' }}>
-                <h3 className="bento-title">EDUCATION</h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '25px', marginTop: '10px' }}>
-                  <div className="education-item" style={{ display: 'flex', flexDirection: 'column' }}>
-                    <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(150,150,150,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '15px' }}>
-                      <span style={{ fontSize: '1.2rem' }}>🎓</span>
+            {/* RIGHT: CONTENT */}
+            <div className="about-right-col">
+              {/* BIO TEXT - Visible on desktop, hidden on mobile */}
+              <div className="about-text-block desktop-only">
+                <h2 className="new-bio-heading">HI, I'm Adhan.</h2>
+                <p className="new-bio-paragraph">
+                  Computer Science student at the College of Engineering Vadakara (CEV) with a passion for design and video editing. Currently serving as Media Lead at IEEE SB CEV, and working as both Video Editor and Design Team Member at IEEE EdSoc Kerala Chapter, along with Made Web's. Skilled in Figma and Canva for UI/UX design, prototyping, and creating visually compelling content. Experienced in Adobe Premiere Pro and CapCut Pro for video editing, delivering impactful media that merges storytelling with clean, user-centered design.
+                </p>
+              </div>
+
+              <div className="about-bento-grid">
+                {/* EDUCATION */}
+                <div className="bento-card education-bento">
+                  <h3 className="bento-title">EDUCATION</h3>
+                  <div className="education-list-wrapper">
+                    <div className="education-item">
+                      <div className="education-icon-circle">
+                        <span>🎓</span>
+                      </div>
+                      <h4 className="edu-title">B.Tech Computer Science</h4>
+                      <p className="edu-sub">College of Engineering Vadakara</p>
+                      <span className="edu-status ongoing sketch-text">ONGOING</span>
                     </div>
-                    <h4 style={{ fontSize: '1.3rem', marginBottom: '8px', fontWeight: 600 }}>B.Tech Computer Science</h4>
-                    <p style={{ opacity: 0.7, fontSize: '0.95rem', marginBottom: '8px' }}>College of Engineering Vadakara</p>
-                    <span className="sketch-text" style={{ fontSize: '0.8rem', color: 'var(--accent-color)', letterSpacing: '1px' }}>ONGOING</span>
-                  </div>
 
-                  <div style={{ height: '1px', width: '100%', background: 'rgba(150,150,150,0.1)' }}></div>
+                    <div className="education-divider"></div>
 
-                  <div className="education-item" style={{ display: 'flex', flexDirection: 'column' }}>
-                    <h4 style={{ fontSize: '1.3rem', marginBottom: '8px', fontWeight: 600 }}>Higher Secondary</h4>
-                    <p style={{ opacity: 0.7, fontSize: '0.95rem', marginBottom: '8px' }}>NHSS Nochad • Biology Science</p>
-                    <span className="sketch-text" style={{ fontSize: '0.8rem', opacity: 0.5, letterSpacing: '1px' }}>COMPLETED</span>
+                    <div className="education-item">
+                      <h4 className="edu-title">Higher Secondary</h4>
+                      <p className="edu-sub">NHSS Nochad • Biology Science</p>
+                      <span className="edu-status completed sketch-text">COMPLETED</span>
+                    </div>
                   </div>
                 </div>
               </div>

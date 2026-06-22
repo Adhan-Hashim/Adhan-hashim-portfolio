@@ -159,6 +159,9 @@
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
+  :root {
+    --exp-page-img-display: none;
+  }
   .roadmap-svg-wrapper {
     left: 20px;
     transform: none;

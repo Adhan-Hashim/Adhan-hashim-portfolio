@@ -1,0 +1,1098 @@
+/* ═══════════════════════════════════════════════════════════════
+   EXPERIENCE SECTION: PARALLAX VILLAGE ROAD SCROLL
+   ═══════════════════════════════════════════════════════════════ */
+
+.road-exp-section {
+  height: 900vh;
+  /* Control the length of the scroll journey (larger = slower/smoother scroll speed) */
+  position: relative;
+  background: var(--bg-color);
+  overflow: visible;
+}
+
+
+.road-exp-pin {
+  height: 100vh;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: var(--bg-color);
+  transition: var(--transition-color);
+  z-index: 5;
+}
+
+/* ── Floating Title Header ── */
+.road-exp-header {
+  position: absolute;
+  top: 8vh;
+  left: 8vw;
+  z-index: 30;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.road-exp-header h2 {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  letter-spacing: -2px;
+  line-height: 0.95;
+  margin: 0;
+}
+
+.road-exp-header h2 span {
+  color: var(--accent-color);
+}
+
+.road-exp-subtitle {
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  color: var(--accent-color);
+  margin-bottom: 5px;
+}
+
+.road-exp-hint {
+  position: absolute;
+  bottom: 4vh;
+  right: 8vw;
+  z-index: 30;
+  font-size: 0.9rem;
+  color: var(--muted-text);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.road-exp-hint-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  animation: pulse-dot 1.5s infinite;
+}
+
+@keyframes pulse-dot {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+}
+
+/* ── Landscape Track ── */
+.road-landscape-track {
+  position: absolute;
+  inset: 0;
+  width: 600vw;
+  /* Match the total scroll journey scale */
+  height: 100vh;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.road-parallax-layer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  will-change: transform;
+}
+
+/* Layer 1: Sky */
+.layer-sky {
+  z-index: 1;
+  background: linear-gradient(to bottom, rgba(var(--accent-color-rgb), 0.04) 0%, transparent 60%);
+  display: flex;
+  align-items: flex-start;
+  padding-top: 15vh;
+}
+
+/* Layer 2: Hills (using background image) */
+.layer-hills {
+  z-index: 2;
+  height: 25vh;
+  bottom: 18%;
+  transition: filter 0.8s ease;
+}
+
+.studio-mode .layer-hills {
+  filter: invert(0.9) hue-rotate(180deg) opacity(0.3);
+}
+
+.sad-mode-active .layer-hills {
+  filter: invert(0.9) sepia(1) saturate(1.5) hue-rotate(-50deg) opacity(0.4);
+}
+
+/* Layer 3: Village Midground (using background image) */
+.layer-village {
+  z-index: 3;
+  height: 30vh;
+  bottom: 18%;
+  transition: filter 0.8s ease;
+}
+
+.studio-mode .layer-village {
+  filter: invert(0.9) hue-rotate(180deg) opacity(0.35);
+}
+
+.sad-mode-active .layer-village {
+  filter: invert(0.9) sepia(1) saturate(1.5) hue-rotate(-50deg) opacity(0.45);
+}
+
+/* Layer 4: Road and Milestones */
+.layer-road {
+  z-index: 4;
+  height: 100%;
+  width: 570vw;
+  /* Ends exactly under the car (20vw) at scroll limit (-550vw) */
+}
+
+/* Layer 5: Foreground Streetlights */
+.layer-streetlights {
+  z-index: 30;
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+}
+
+/* ── Road Design ── */
+.village-road-container {
+  position: absolute;
+  bottom: 12%;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  z-index: 5;
+}
+
+.village-road-main {
+  width: 100%;
+  height: 14px;
+  background-color: var(--text-color);
+  opacity: 0.95;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.studio-mode .village-road-main {
+  background-color: #1f1f22;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.sad-mode-active .village-road-main {
+  background-color: #300000;
+  border-top: 1px solid rgba(255, 96, 96, 0.15);
+}
+
+/* Road Dashed Line */
+.village-road-dashes {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  border-top: 2px dashed var(--bg-color);
+  opacity: 0.4;
+  transform: translateY(-50%);
+}
+
+.studio-mode .village-road-dashes {
+  border-top-color: #ff3c3c;
+}
+
+.sad-mode-active .village-road-dashes {
+  border-top-color: #ff6060;
+}
+
+/* Curb / Road Shoulder */
+.village-road-curb {
+  width: 100%;
+  height: 4px;
+  background-color: var(--accent-color);
+  position: absolute;
+  top: -4px;
+  left: 0;
+  opacity: 0.8;
+}
+
+.sad-mode-active .village-road-curb {
+  background-color: #ff4040;
+}
+
+/* Grass border under road */
+.village-road-under {
+  width: 100%;
+  height: 12vh;
+  background-color: rgba(var(--accent-color-rgb), 0.02);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border-top: 1px solid rgba(var(--accent-color-rgb), 0.05);
+}
+
+/* ── The Car: Pinned Viewport Container ── */
+.car-viewport-pin {
+  position: absolute;
+  bottom: calc(12% + 38px);
+  /* Bottom edge sits nicely above the road surface */
+  left: 20vw;
+  width: 180px;
+  height: 180px;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.car-container-internal {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  animation: car-engine-rumble 0.2s linear infinite;
+  will-change: transform;
+}
+
+@keyframes car-engine-rumble {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  25% {
+    transform: translateY(-0.5px) rotate(-0.08deg);
+  }
+
+  50% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  75% {
+    transform: translateY(0.3px) rotate(0.08deg);
+  }
+
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes headlight-blink {
+
+  0%,
+  75%,
+  79%,
+  83%,
+  100% {
+    opacity: 1;
+  }
+
+  77%,
+  81% {
+    opacity: 0.15;
+  }
+
+  78%,
+  82% {
+    opacity: 0.8;
+  }
+}
+
+.car-body-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  position: absolute;
+  bottom: -24px;
+  /* Lowered significantly to tuck wheels */
+  left: 0;
+  z-index: 2;
+  filter: contrast(1.05) brightness(1.05) drop-shadow(0 4px 10px rgba(0, 0, 0, 0.12));
+  transition: filter 0.8s ease;
+}
+
+.studio-mode .car-body-image {
+  filter: contrast(1.1) brightness(1.1) drop-shadow(0 6px 16px rgba(255, 255, 255, 0.15));
+}
+
+.sad-mode-active .car-body-image {
+  filter: contrast(1.2) drop-shadow(0 6px 16px rgba(255, 0, 0, 0.35));
+}
+
+.car-shadow {
+  position: absolute;
+  bottom: -2px;
+  left: 15%;
+  width: 70%;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.18);
+  border-radius: 50%;
+  filter: blur(5px);
+  z-index: 1;
+  transform-origin: center;
+}
+
+.studio-mode .car-shadow {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.sad-mode-active .car-shadow {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+/* Wheels */
+.car-wheel {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  bottom: 0px;
+  z-index: 3;
+}
+
+.wheel-front {
+  right: 35px;
+  /* Brought even closer to center */
+}
+
+.wheel-back {
+  left: 35px;
+  /* Brought even closer to center */
+}
+
+.car-wheel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: filter 0.8s ease;
+}
+
+.studio-mode .car-wheel-img {
+  filter: none;
+}
+
+.sad-mode-active .car-wheel-img {
+  filter: none;
+}
+
+/* Headlight beam */
+.car-headlight-beam {
+  position: absolute;
+  left: 140px;
+  bottom: -8px;
+  /* Lowered headlight beam even more */
+  width: 340px;
+  height: 70px;
+  z-index: 1;
+  transform-origin: left center;
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  filter: blur(5px) drop-shadow(0 0 10px rgba(255, 213, 79, 0.2));
+  transition: opacity 0.5s ease;
+}
+
+.studio-mode .car-headlight-beam,
+.sad-mode-active .car-headlight-beam {
+  opacity: 1;
+  animation: headlight-blink 7s infinite;
+}
+
+/* ── Milestones & Buildings ── */
+.milestones-wrapper {
+  position: absolute;
+  bottom: 12%;
+  /* Sits on road bottom */
+  left: 0;
+  width: 100%;
+  height: 500px;
+}
+
+.milestone-stop {
+  position: absolute;
+  bottom: 0;
+  width: 300px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  pointer-events: auto;
+}
+
+/* Stop Placements (based on math in JS) */
+.stop-0 {
+  left: 120vw;
+}
+
+.stop-1 {
+  left: 200vw;
+}
+
+.stop-2 {
+  left: 280vw;
+}
+
+.stop-3 {
+  left: 360vw;
+}
+
+.stop-4 {
+  left: 440vw;
+}
+
+.stop-5 {
+  left: 520vw;
+}
+
+/* Vector structures */
+.milestone-structure {
+  width: 220px;
+  height: 220px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  position: absolute;
+  bottom: 50px;
+  /* Sits nicely above road */
+  z-index: 3;
+}
+
+/* Specific overrides to increase milestone 0 size */
+.stop-0 .milestone-structure {
+  width: 320px;
+  height: 320px;
+  bottom: 30px;
+}
+
+
+
+/* Specific overrides to increase milestone 1 house and lower its position */
+.stop-1 .milestone-structure {
+  width: 362px;
+  height: 362px;
+  bottom: 30px;
+}
+
+/* Keep dark mode milestone 1 structure at original size/position */
+.studio-mode .stop-1 .milestone-structure,
+.sad-mode-active .stop-1 .milestone-structure {
+  width: 320px;
+  height: 320px;
+  bottom: 30px;
+}
+
+
+
+/* Specific overrides to lower milestone 2 structure position and adjust size */
+.stop-2 .milestone-structure {
+  width: 260px;
+  height: 260px;
+  bottom: 45px;
+}
+
+
+
+/* Lower milestone 2 structure even more in dark/night mode and moderate size */
+.studio-mode .stop-2 .milestone-structure,
+.sad-mode-active .stop-2 .milestone-structure {
+  width: 250px;
+  height: 250px;
+  bottom: 30px;
+}
+
+
+
+/* Specific overrides to increase milestone 3 structure in light mode */
+.stop-3 .milestone-structure {
+  width: 310px;
+  height: 310px;
+  bottom: 45px;
+}
+
+
+
+/* Moderate size increase for night version in dark/sad modes */
+.studio-mode .stop-3 .milestone-structure,
+.sad-mode-active .stop-3 .milestone-structure {
+  width: 262px;
+  height: 260px;
+  bottom: 43px;
+}
+
+
+
+/* Lower milestone 4 structure */
+.stop-4 .milestone-structure {
+  bottom: 25px;
+}
+
+/* Lower milestone 5 structure */
+.stop-5 .milestone-structure {
+  bottom: 25px;
+}
+
+.milestone-building-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: contrast(1.05) brightness(1.05) drop-shadow(0 8px 16px rgba(0, 0, 0, 0.08));
+  transition: filter 0.8s ease;
+}
+
+.studio-mode .milestone-building-img {
+  filter: invert(0.9) hue-rotate(180deg) contrast(1.15) brightness(1.2);
+}
+
+.studio-mode .milestone-building-img.milestone-night-version {
+  filter: brightness(1.25) contrast(1.1);
+}
+
+.sad-mode-active .milestone-building-img {
+  filter: invert(0.9) sepia(1) saturate(2.5) hue-rotate(-50deg) contrast(1.2);
+}
+
+.sad-mode-active .milestone-building-img.milestone-night-version {
+  filter: brightness(1.25) contrast(1.1);
+}
+
+/* Road signpost marker */
+
+/* Streetlights along the road */
+.road-streetlight {
+  position: absolute;
+  bottom: calc(12% + 25px);
+  /* Lowered slightly */
+  width: 50px;
+  height: 160px;
+  z-index: 5;
+}
+
+.road-streetlight svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Warm halo around the streetlight bulb */
+.streetlight-bulb-halo {
+  position: absolute;
+  top: 6px;
+  left: 16px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+      rgba(255, 248, 225, 0.85) 0%,
+      rgba(255, 224, 178, 0.45) 25%,
+      rgba(255, 204, 128, 0.15) 55%,
+      rgba(255, 183, 77, 0.05) 75%,
+      transparent 100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+  filter: blur(3px);
+}
+
+/* Realistic bulb glow — gentle warm intensity drift */
+@keyframes bulb-glow-pulse {
+
+  0%,
+  100% {
+    filter: drop-shadow(0 0 4px #fff8e1) drop-shadow(0 0 8px #ffe0b2) drop-shadow(0 0 14px rgba(255, 183, 77, 0.3));
+    fill: #fffde7;
+  }
+
+  25% {
+    filter: drop-shadow(0 0 5px #fff8e1) drop-shadow(0 0 10px #ffcc80) drop-shadow(0 0 18px rgba(255, 183, 77, 0.4));
+    fill: #fff9c4;
+  }
+
+  50% {
+    filter: drop-shadow(0 0 3px #fff8e1) drop-shadow(0 0 7px #ffe0b2) drop-shadow(0 0 12px rgba(255, 183, 77, 0.25));
+    fill: #fffde7;
+  }
+
+  75% {
+    filter: drop-shadow(0 0 6px #fff8e1) drop-shadow(0 0 11px #ffcc80) drop-shadow(0 0 16px rgba(255, 183, 77, 0.35));
+    fill: #fff9c4;
+  }
+}
+
+/* Halo breathing — very slow atmospheric scale */
+@keyframes halo-pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.65;
+  }
+
+  50% {
+    transform: scale(1.12);
+    opacity: 0.85;
+  }
+}
+
+/* ── Studio (Dark) Mode ── */
+.studio-mode .streetlight-bulb-halo {
+  opacity: 0.75;
+  animation: halo-pulse 6s infinite ease-in-out;
+}
+
+.studio-mode .streetlight-bulb {
+  fill: #fffde7;
+  animation: bulb-glow-pulse 7s infinite ease-in-out;
+  filter: drop-shadow(0 0 4px #fff8e1) drop-shadow(0 0 8px #ffe0b2) drop-shadow(0 0 14px rgba(255, 183, 77, 0.3));
+}
+
+/* ── Sad Mode ── */
+.sad-mode-active .streetlight-bulb-halo {
+  opacity: 0.45;
+  animation: halo-pulse 8s infinite ease-in-out;
+}
+
+.sad-mode-active .streetlight-bulb {
+  fill: #fffde7;
+  animation: bulb-glow-pulse 9s infinite ease-in-out;
+  filter: drop-shadow(0 0 3px #fff8e1) drop-shadow(0 0 6px #ffe0b2) drop-shadow(0 0 10px rgba(255, 183, 77, 0.2));
+}
+
+/* ── Experience Billboards / Cards ── */
+.milestone-billboard-wrap {
+  position: absolute;
+  bottom: 120px;
+  left: 280px;
+  width: 320px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  pointer-events: auto;
+  transform: scale(0);
+  opacity: 0;
+  transform-origin: left center;
+  will-change: transform, opacity;
+}
+
+.milestone-billboard-card {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+  position: relative;
+  transition: transform 0.3s ease, opacity 0.8s ease;
+}
+
+.milestone-billboard-card::after {
+  display: none;
+}
+
+/* Light Mode Card Details */
+.billboard-year {
+  font-size: 0.85rem;
+  color: var(--accent-color);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.billboard-role {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-color);
+  line-height: 1.2;
+  margin-bottom: 2px;
+}
+
+.billboard-company {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--muted-text);
+  margin-bottom: 12px;
+}
+
+.billboard-desc {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--muted-text);
+}
+
+/* Sad Mode Card Override */
+.sad-mode-active .billboard-year {
+  color: #ff6060;
+}
+
+.sad-mode-active .billboard-role {
+  color: #ffeaea;
+}
+
+.sad-mode-active .billboard-company {
+  color: #c07070;
+}
+
+.sad-mode-active .billboard-desc {
+  color: #d8a0a0;
+}
+
+
+/* ── Background Scenery (Drifting clouds & Star lines) ── */
+.village-clouds-container {
+  width: 100%;
+  height: 30vh;
+  position: absolute;
+  top: 10vh;
+  left: 0;
+}
+
+.sky-cloud {
+  position: absolute;
+  opacity: 0.15;
+}
+
+.studio-mode .sky-cloud {
+  display: none;
+  /* Removed clouds in dark mode */
+}
+
+.sad-mode-active .sky-cloud {
+  display: none;
+  /* Hide clouds in sad mode as well */
+}
+
+/* Night Sky Stars */
+.village-stars-container {
+  position: absolute;
+  top: 28vh;
+  /* Lowered stars further */
+  left: 0;
+  width: 100%;
+  height: 40vh;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  z-index: 1;
+}
+
+.studio-mode .village-stars-container,
+.sad-mode-active .village-stars-container {
+  opacity: 0.8;
+}
+
+.sky-star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 6px 1px rgba(255, 255, 255, 0.8);
+}
+
+.sky-moon {
+  position: absolute;
+  top: 40%;
+  /* Lowered moon further */
+  left: 35vw;
+  filter: drop-shadow(0 0 15px rgba(255, 249, 214, 0.6));
+  transform: rotate(-15deg);
+}
+
+.sad-mode-active .sky-star {
+  background-color: #ffcccc;
+}
+
+/* ── Mobile Layout Alert / Fallback ── */
+@media (max-width: 768px) {
+
+  .road-exp-header {
+    top: 18vh;
+  }
+
+  .village-road-container {
+    bottom: 15%;
+  }
+
+  .milestones-wrapper {
+    bottom: 15%;
+  }
+
+  .road-streetlight {
+    bottom: calc(15% + 25px);
+  }
+
+  .layer-hills {
+    bottom: 18%;
+  }
+
+  .layer-village {
+    bottom: 18%;
+  }
+
+  .village-road-under {
+    height: 15vh;
+  }
+
+  .car-viewport-pin {
+    width: 180px;
+    height: 180px;
+    left: 5vw;
+    bottom: calc(15% + 38px);
+  }
+
+  .car-shadow {
+    width: 70%;
+    height: 6px;
+    bottom: -3px;
+  }
+
+  .car-headlight-beam {
+    left: 90px;
+    top: 60px;
+    width: 300px;
+    height: 75px;
+    mix-blend-mode: screen;
+    filter: blur(3px) drop-shadow(0 0 6px rgba(255, 213, 79, 0.2));
+  }
+
+  .milestone-structure {
+    width: 180px;
+    height: 180px;
+  }
+
+  .milestone-billboard-wrap {
+    width: 320px;
+    bottom: 150px;
+    left: 40px;
+  }
+
+  /* Specific overrides to increase milestone 0 size on mobile */
+  .stop-0 .milestone-structure {
+    width: 280px;
+    height: 280px;
+    bottom: 40px;
+  }
+
+  .stop-1 .milestone-structure {
+    width: 290px;
+    height: 290px;
+    bottom: 40px;
+  }
+
+  .studio-mode .stop-1 .milestone-structure,
+  .sad-mode-active .stop-1 .milestone-structure {
+    width: 260px;
+    height: 260px;
+    bottom: 35px;
+  }
+
+  /* Specific overrides to lower milestone 2 structure position and adjust size on mobile */
+  .stop-2 .milestone-structure {
+    width: 220px;
+    height: 220px;
+    bottom: 45px;
+  }
+
+  /* Lower milestone 2 structure even more in dark/night mode and moderate size on mobile */
+  .studio-mode .stop-2 .milestone-structure,
+  .sad-mode-active .stop-2 .milestone-structure {
+    width: 210px;
+    height: 210px;
+    bottom: 30px;
+  }
+
+  /* Specific overrides to increase milestone 3 structure in light mode on mobile */
+  .stop-3 .milestone-structure {
+    width: 260px;
+    height: 260px;
+    bottom: 40px;
+  }
+
+  /* Moderate size increase for night version in dark/sad modes on mobile */
+  .studio-mode .stop-3 .milestone-structure,
+  .sad-mode-active .stop-3 .milestone-structure {
+    width: 220px;
+    height: 220px;
+    bottom: 45px;
+  }
+
+  /* Lower milestone 4 structure on mobile */
+  .stop-4 .milestone-structure {
+    bottom: 25px;
+  }
+
+  /* Lower milestone 5 structure on mobile */
+  .stop-5 .milestone-structure {
+    bottom: 25px;
+  }
+
+  .milestone-billboard-card {
+    padding: 20px;
+  }
+
+  .billboard-role {
+    font-size: 1.3rem;
+  }
+
+  .billboard-company {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+
+  .billboard-desc {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .stop-0 {
+    left: 150vw;
+  }
+
+  .stop-1 {
+    left: 270vw;
+  }
+
+  .stop-2 {
+    left: 390vw;
+  }
+
+  .stop-3 {
+    left: 510vw;
+  }
+
+  .stop-4 {
+    left: 630vw;
+  }
+
+  .stop-5 {
+    left: 750vw;
+  }
+
+  .road-landscape-track {
+    width: 850vw;
+  }
+
+  .layer-road {
+    width: 810vw;
+    /* Ends exactly under the car (10vw) at scroll limit (-800vw) */
+  }
+
+  .road-exp-section {
+    height: 1200vh;
+  }
+}
+
+/* ── SVG Window Pane Glowing States ── */
+.window-pane {
+  fill: var(--bg-color);
+  stroke: var(--text-color);
+  transition: fill 0.8s ease, stroke 0.8s ease;
+}
+
+.studio-mode .window-pane {
+  fill: #ffd700 !important;
+  stroke: #ffa500 !important;
+}
+
+.sad-mode-active .window-pane {
+  fill: #ff3c3c !important;
+  stroke: #ff0000 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CLIFF-EDGE DUST & DEBRIS PARTICLE EFFECTS
+   ═══════════════════════════════════════════════════════════════ */
+
+.cliff-dust-container {
+  position: absolute;
+  bottom: -5px;
+  right: -10px;
+  width: 80px;
+  height: 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Dust puffs — float upward and spread laterally */
+.cliff-dust-particle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: var(--dust-size);
+  height: var(--dust-size);
+  border-radius: 50%;
+  background: var(--text-color);
+  opacity: 0;
+  animation: dust-puff var(--dust-duration) var(--dust-delay) ease-out forwards;
+}
+
+@keyframes dust-puff {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: var(--dust-opacity);
+  }
+
+  40% {
+    opacity: calc(var(--dust-opacity) * 0.7);
+  }
+
+  100% {
+    transform: translate(var(--dust-x), var(--dust-y)) scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* Rock chunks — follow parabolic arcs (gravity pull) */
+.cliff-rock-chunk {
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+  width: var(--rock-size);
+  height: var(--rock-size);
+  border-radius: 1px;
+  background: var(--muted-text);
+  opacity: 0;
+  animation: rock-fall var(--rock-duration) var(--rock-delay) cubic-bezier(0.33, 0, 0.67, 0.33) forwards;
+}
+
+@keyframes rock-fall {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0.8;
+  }
+
+  20% {
+    opacity: 0.9;
+  }
+
+  100% {
+    transform: translate(var(--rock-x), var(--rock-y)) rotate(var(--rock-rotate));
+    opacity: 0;
+  }
+}
+
+/* Studio/Sad mode dust coloring */
+.studio-mode .cliff-dust-particle {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.studio-mode .cliff-rock-chunk {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.sad-mode-active .cliff-dust-particle {
+  background: rgba(255, 120, 120, 0.5);
+}
+
+.sad-mode-active .cliff-rock-chunk {
+  background: rgba(255, 120, 120, 0.6);
+}

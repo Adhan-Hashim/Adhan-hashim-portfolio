@@ -5,6 +5,7 @@ const Cursor = ({ isSadMode }) => {
   const [cursorText, setCursorText] = useState('');
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
+  const [isMobileDevice, setIsMobileDevice] = useState(false);
   
   // Mouse position
   const mouseX = useMotionValue(-100);
@@ -16,6 +17,13 @@ const Cursor = ({ isSadMode }) => {
   const smoothY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
+    const isMobile = window.matchMedia('(pointer: coarse)').matches || 
+                     'ontouchstart' in window || 
+                     navigator.maxTouchPoints > 0;
+    
+    setIsMobileDevice(isMobile);
+    if (isMobile) return;
+
     const onMouseMove = (e) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
@@ -62,6 +70,8 @@ const Cursor = ({ isSadMode }) => {
   // UI States
   const mainSize = isHovered ? (cursorText ? 120 : 60) : 25;
   const dotSize = 4;
+
+  if (isMobileDevice) return null;
 
   return (
     <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 999999 }}>

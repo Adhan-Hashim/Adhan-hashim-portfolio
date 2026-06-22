@@ -94,52 +94,9 @@ class GuitarString {
   }
 }
 
-const GuitarBackground = ({ isStudio, isSadMode, isPlaying, setIsPlaying, setIsSadMode, currentSong, onTimeUpdate, currentTime, hasSeenIntro }) => {
+const GuitarBackground = ({ isStudio, isSadMode, isPlaying, setIsPlaying, setIsSadMode, currentSong, onTimeUpdate, currentTime, hasSeenIntro, audioRef }) => {
   const canvasRef = useRef(null);
   const stringsRef = useRef([]);
-  const audioRef = useRef(null);
-
-  useEffect(() => {
-    if (!audioRef.current) {
-      audioRef.current = new Audio(currentSong.url);
-      audioRef.current.loop = false;
-      audioRef.current.onended = () => {
-        setIsPlaying(false);
-      };
-    }
-    
-    const audio = audioRef.current;
-    
-    const tick = () => {
-      if (onTimeUpdate) onTimeUpdate(audio.currentTime);
-    };
-
-    audio.addEventListener('timeupdate', tick);
-    
-    // Switch song source if it changed
-    if (audio.src !== window.location.origin + currentSong.url) {
-      const wasPlaying = !audio.paused;
-      audio.src = currentSong.url;
-      audio.load();
-      if (wasPlaying || isPlaying) {
-        audio.currentTime = 0;
-        audio.play().catch(e => console.error("Audio blocked", e));
-      }
-    }
-    
-    if (isPlaying) {
-      if (currentSong.id === 1 && audio.currentTime < 1) {
-         audio.currentTime = 15;
-      }
-      audio.play().catch(e => console.error("Audio blocked", e));
-    } else {
-      audio.pause();
-    }
-
-    return () => {
-      audio.removeEventListener('timeupdate', tick);
-    };
-  }, [isPlaying, setIsPlaying, currentSong, onTimeUpdate]);
 
   const toggleVibe = () => {
     initAudio();

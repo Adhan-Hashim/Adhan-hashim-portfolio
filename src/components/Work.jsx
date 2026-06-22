@@ -73,12 +73,13 @@ const StickyCard = ({ project, index, range, targetScale }) => {
         style={{
           scale,
           width: '85%',
-          height: '70vh',
+          height: 'var(--work-card-height, 70vh)',
           backgroundColor: project.color,
           borderRadius: '4px',
           boxShadow: '0 20px 50px rgba(0,0,0,0.1)',
           position: 'relative',
           display: 'flex',
+          flexDirection: 'var(--work-card-flex-dir, row)',
           overflow: 'hidden',
           border: '1px solid rgba(0,0,0,0.05)'
         }}
@@ -94,7 +95,7 @@ const StickyCard = ({ project, index, range, targetScale }) => {
         }} />
 
         {/* Content Half */}
-        <div style={{ flex: 1, padding: '60px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', zIndex: 2 }}>
+        <div style={{ flex: 'var(--work-card-content-flex, 1)', padding: 'var(--work-card-padding, 60px)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', zIndex: 2 }}>
           <div>
             <span className="sketch-text" style={{ fontSize: '1.5rem', color: 'var(--accent-color)', display: 'block', marginBottom: '10px' }}>
               /{project.year}
@@ -111,17 +112,19 @@ const StickyCard = ({ project, index, range, targetScale }) => {
             <span style={{ fontSize: '0.8rem', padding: '5px 15px', border: '1px solid var(--text-color)', borderRadius: '30px', opacity: 0.5 }}>
               {project.category}
             </span>
-            <motion.div
-              whileHover={{ x: 10 }}
-              style={{ color: 'var(--accent-color)', fontWeight: 'bold', fontSize: '0.9rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}
-            >
-              VIEW CASE <svg width="15" height="10" viewBox="0 0 15 10"><path d="M0,5 L12,5 M8,0 L12,5 L8,10" fill="none" stroke="currentColor" strokeWidth="2" /></svg>
-            </motion.div>
+            <Link to={project.link || "/works"} style={{ textDecoration: 'none' }}>
+              <motion.div
+                whileHover={{ x: 10 }}
+                style={{ color: 'var(--accent-color)', fontWeight: 'bold', fontSize: '0.9rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}
+              >
+                VIEW CASE <svg width="15" height="10" viewBox="0 0 15 10"><path d="M0,5 L12,5 M8,0 L12,5 L8,10" fill="none" stroke="currentColor" strokeWidth="2" /></svg>
+              </motion.div>
+            </Link>
           </div>
         </div>
 
         {/* Image Half */}
-        <div style={{ flex: 1.2, position: 'relative', overflow: 'hidden' }}>
+        <div style={{ flex: 'var(--work-card-image-flex, 1.2)', position: 'relative', overflow: 'hidden', height: 'var(--work-card-image-height, auto)' }}>
           <motion.img
             whileHover={{ scale: 1.05 }}
             src={project.image}

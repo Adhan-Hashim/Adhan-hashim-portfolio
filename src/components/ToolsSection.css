@@ -1,0 +1,110 @@
+.tools-clean-section {
+  position: relative;
+  width: 100%;
+  padding: 120px 8%;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.4s ease, color 0.4s ease;
+  font-family: var(--font-main), sans-serif;
+}
+
+.tools-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tools-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.tools-subtitle {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent-color);
+  margin-bottom: 12px;
+}
+
+.tools-title {
+  font-family: var(--font-heading), sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(40px, 60px));
+  justify-content: center;
+  gap: 40px 60px;
+  width: 100%;
+}
+
+.tool-card {
+  background: transparent;
+  border: none;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  cursor: default;
+}
+
+.tool-card:hover {
+  transform: translateY(-4px);
+}
+
+.tool-icon-wrapper {
+  width: 45px;
+  height: 45px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.tool-card:hover .tool-icon-wrapper {
+  transform: scale(1.1);
+}
+
+.tool-icon-wrapper svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Sad Mode Adjustments */
+
+@media (max-width: 768px) {
+  .tools-clean-section {
+    padding: 80px 5%;
+  }
+  .tools-grid {
+    gap: 24px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tools-grid {
+    gap: 20px 12px;
+    grid-template-columns: repeat(5, minmax(35px, 45px));
+  }
+}
+.canva-logo {
+  mix-blend-mode: multiply;
+}
+.studio-mode .canva-logo,
+.dark-mode .canva-logo {
+  mix-blend-mode: normal;
+  border-radius: 50%;
+  background: transparent;
+}

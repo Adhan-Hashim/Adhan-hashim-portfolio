@@ -20,9 +20,9 @@ const timelineData = [
   },
   {
     year: "Mar 2025 - Mar 2026",
-    title: "Designer",
+    title: "Design Contributor",
     company: "IEEE EdSoc Kerala Chapter",
-    desc: "Creating posters and promotional materials for events and initiatives, utilizing Figma to craft professional and visually consistent designs."
+    desc: "While officially a Video Editor by role, I frequently step outside my formal role to provide extensive design support, creating posters and promotional materials using Figma."
   },
   {
     year: "May 2024 - Feb 2025",
@@ -40,7 +40,7 @@ const timelineData = [
     year: "Sep 2024 - Present",
     title: "Video Editor",
     company: "Made Webs",
-    desc: "Created promotional and branding content showcasing products, services, and client success stories for social media, websites, and campaigns."
+    desc: "Specialized in client video works, creating promotional and branding content showcasing products, services, and client success stories for social media, websites, and campaigns."
   }
 ];
 
@@ -76,8 +76,15 @@ const ExperiencePage = ({ isStudio, toggleStudio, isSadMode, isPlaying }) => {
           >
             <img
               src={experienceImg}
-
-              style={{ width: '320px', height: 'auto', marginBottom: '-384px', transform: 'translate(328px, 10px)', zIndex: 2, position: 'relative' }}
+              style={{
+                width: 'var(--exp-page-img-width, 320px)',
+                height: 'auto',
+                marginBottom: 'var(--exp-page-img-margin-bottom, -384px)',
+                transform: 'translate(var(--exp-page-img-x, 328px), 10px)',
+                zIndex: 2,
+                position: 'relative',
+                display: 'var(--exp-page-img-display, block)'
+              }}
             />
             <h1 className="roadmap-title" style={{ position: 'relative', zIndex: 1 }}>PROFESSIONAL EXPERIENCE</h1>
             <p className="roadmap-subtitle sketch-text">My journey so far.</p>

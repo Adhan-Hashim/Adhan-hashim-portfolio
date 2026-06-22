@@ -3,12 +3,22 @@ import { motion } from 'framer-motion';
 import gsap from 'gsap';
 
 const posters = [
-  { id: 1, url: '/assets/posters/poster1.png' },
-  { id: 2, url: '/assets/posters/poster2.png' },
-  { id: 3, url: '/assets/posters/poster3.png' },
-  { id: 4, url: '/assets/posters/poster4.png' },
-  { id: 5, url: '/assets/posters/poster5.png' },
-  { id: 6, url: '/assets/posters/poster6.png' },
+  { id: 1, url: '/assets/posters/A4 - 4ERD.png' },
+  { id: 2, url: '/assets/posters/cr.png' },
+  { id: 3, url: '/assets/posters/messi.png' },
+  { id: 4, url: '/assets/posters/messii.png' },
+  { id: 5, url: '/assets/posters/messiii.png' },
+  { id: 6, url: '/assets/posters/njr.png' },
+  { id: 7, url: '/assets/posters/poster 4.png' },
+  { id: 8, url: '/assets/posters/poster11.png' },
+  { id: 9, url: '/assets/posters/poster12.png' },
+  { id: 10, url: '/assets/posters/poster2.png' },
+  { id: 11, url: '/assets/posters/poster3.png' },
+  { id: 12, url: '/assets/posters/poster5.png' },
+  { id: 13, url: '/assets/posters/poster6.png' },
+  { id: 14, url: '/assets/posters/poster7.png' },
+  { id: 15, url: '/assets/posters/poster8.png' },
+  { id: 16, url: '/assets/posters/poster9.png' },
 ];
 
 // Build each column's poster list by repeating for seamless loop
@@ -20,11 +30,21 @@ const makeColumn = (indices) =>
 
 // Left side: 2 columns | Right side: 2 columns
 const columns = [
-  { items: makeColumn([0, 3, 1, 4]), direction: -1, speed: 28 }, // left-outer — up
-  { items: makeColumn([2, 5, 0, 3]), direction: 1,  speed: 22 }, // left-inner — down
-  { items: makeColumn([1, 4, 2, 5]), direction: -1, speed: 25 }, // right-inner — up
-  { items: makeColumn([3, 0, 5, 2]), direction: 1,  speed: 30 }, // right-outer — down
+  { items: makeColumn([0, 4, 8, 12, 1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15]), direction: -1, speed: 28 }, // left-outer — up
+  { items: makeColumn([15, 11, 7, 3, 14, 10, 6, 2, 13, 9, 5, 1, 12, 8, 4, 0]), direction: 1,  speed: 22 }, // left-inner — down
+  { items: makeColumn([2, 5, 8, 11, 14, 1, 4, 7, 10, 13, 0, 3, 6, 9, 12, 15]), direction: -1, speed: 25 }, // right-inner — up
+  { items: makeColumn([12, 9, 6, 3, 0, 15, 14, 13, 10, 7, 4, 1, 11, 8, 5, 2]), direction: 1,  speed: 30 }, // right-outer — down
 ];
+
+// Helper to duplicate and build row items for horizontal loop
+const makeRow = (indices, prefix) =>
+  [...indices, ...indices].map((i, idx) => ({
+    ...posters[i],
+    uid: `${prefix}-${i}-${idx}`,
+  }));
+
+const row1 = makeRow([0, 2, 5, 6, 8, 10, 12, 14], 'r1');
+const row2 = makeRow([1, 3, 4, 7, 9, 11, 13, 15], 'r2');
 
 /* ─── Single infinite-scroll column ─────────────────────────── */
 const ScrollColumn = ({ items, direction, speed }) => {
@@ -74,11 +94,87 @@ const ScrollColumn = ({ items, direction, speed }) => {
             key={poster.uid}
             style={{
               width: '140px',
-              height: '190px',
+              aspectRatio: '1080 / 1350',
+              height: 'auto',
               borderRadius: '12px',
               overflow: 'hidden',
               flexShrink: 0,
               boxShadow: '0 8px 24px rgba(0,0,0,0.18)',
+            }}
+          >
+            <img
+              src={poster.url}
+              alt=""
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                display: 'block',
+              }}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+/* ─── Single horizontal infinite-scroll row ─────────────────── */
+const ScrollRow = ({ items, direction, speed }) => {
+  const trackRef = useRef(null);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    let totalW = track.scrollWidth / 2;
+    let pos = direction === -1 ? 0 : -totalW;
+
+    const tick = () => {
+      if (totalW === 0) {
+        totalW = track.scrollWidth / 2;
+        if (totalW > 0 && direction === 1) {
+          pos = -totalW;
+        }
+      }
+      pos += direction * (speed / 60);
+      if (direction === -1 && pos <= -totalW) pos = 0;
+      if (direction === 1  && pos >= 0)       pos = -totalW;
+      track.style.transform = `translateX(${pos}px)`;
+    };
+
+    gsap.ticker.add(tick);
+    return () => gsap.ticker.remove(tick);
+  }, [direction, speed]);
+
+  return (
+    <div
+      style={{
+        overflow: 'hidden',
+        width: '100%',
+        display: 'flex',
+        gap: '12px',
+      }}
+    >
+      <div
+        ref={trackRef}
+        style={{
+          display: 'flex',
+          gap: '12px',
+          willChange: 'transform',
+        }}
+      >
+        {items.map((poster) => (
+          <div
+            key={poster.uid}
+            style={{
+              width: '110px',
+              aspectRatio: '1080 / 1350',
+              height: 'auto',
+              borderRadius: '8px',
+              overflow: 'hidden',
+              flexShrink: 0,
+              boxShadow: '0 4px 16px rgba(0,0,0,0.15)',
             }}
           >
             <img
@@ -115,16 +211,20 @@ const CreativeMarquee = () => {
       <div
         style={{
           display: 'flex',
+          flexDirection: 'var(--marquee-flex-dir, row)',
           alignItems: 'center',
           justifyContent: 'center',
-          height: '520px',
+          height: 'var(--marquee-height, 520px)',
+          padding: 'var(--marquee-padding, 0)',
+          gap: 'var(--marquee-gap, 0)',
           position: 'relative',
         }}
       >
         {/* ── Left columns ─────────────────────── */}
         <div
+          className="hide-mobile"
           style={{
-            display: 'flex',
+            display: 'var(--marquee-display, flex)',
             gap: '12px',
             height: '100%',
             paddingTop: '20px',
@@ -207,8 +307,9 @@ const CreativeMarquee = () => {
 
         {/* ── Right columns ────────────────────── */}
         <div
+          className="hide-mobile"
           style={{
-            display: 'flex',
+            display: 'var(--marquee-display, flex)',
             gap: '12px',
             height: '100%',
             paddingTop: '20px',
@@ -219,6 +320,22 @@ const CreativeMarquee = () => {
         >
           <ScrollColumn {...columns[2]} />
           <ScrollColumn {...columns[3]} />
+        </div>
+
+        {/* ── Mobile Horizontal Marquees (shown only on mobile) ── */}
+        <div
+          style={{
+            display: 'var(--marquee-mobile-display, none)',
+            flexDirection: 'column',
+            gap: '16px',
+            width: '100%',
+            overflow: 'hidden',
+            maskImage: 'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)',
+          }}
+        >
+          <ScrollRow items={row1} direction={-1} speed={20} />
+          <ScrollRow items={row2} direction={1} speed={22} />
         </div>
       </div>
     </section>

@@ -16,8 +16,17 @@ const SongCarousel = ({ songs, currentIndex, onSelect }) => {
     }}>
       <AnimatePresence mode="popLayout">
         {songs.map((song, index) => {
-          const offset = index - currentIndex;
-          const isActive = index === currentIndex;
+          let offset = index - currentIndex;
+          const halfLength = Math.floor(songs.length / 2);
+
+          // Wrap around logic for symmetric display
+          if (offset > halfLength) {
+            offset -= songs.length;
+          } else if (offset < -halfLength) {
+            offset += songs.length;
+          }
+
+          const isActive = offset === 0;
           const absOffset = Math.abs(offset);
           
           if (absOffset > 2) return null;
@@ -30,7 +39,7 @@ const SongCarousel = ({ songs, currentIndex, onSelect }) => {
               animate={{
                 opacity: 1 - absOffset * 0.25,
                 scale: isActive ? 1 : 0.7 - absOffset * 0.1,
-                x: offset * (isActive ? 0 : offset > 0 ? 180 : -180),
+                x: offset * 180,
                 z: isActive ? 50 : -absOffset * 100,
                 rotateY: offset * -20,
                 zIndex: songs.length - absOffset,
