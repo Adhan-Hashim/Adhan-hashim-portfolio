@@ -1,10 +1,15 @@
+import designImg from '../assets/works/design.webp';
+import webImg from '../assets/works/web.webp';
+import videoImg from '../assets/works/video.webp';
+import othersImg from '../assets/works/others.webp';
+
 export const projects = [
   {
     id: '01',
     title: 'UI & Design',
     category: 'Creative Conference',
     year: '2025',
-    image: '/src/assets/works/design.webp',
+    image: designImg,
     desc: "Exploring the depths of visual aesthetics and user interfaces.",
     color: "#f2982d",
     selected: true,
@@ -15,7 +20,7 @@ export const projects = [
     title: 'Dev & Projects',
     category: 'Creativity at Work',
     year: '2025',
-    image: '/src/assets/works/web.webp',
+    image: webImg,
     desc: "Building functional and impactful digital experiences.",
     color: "#3bc6c3",
     selected: true,
@@ -26,7 +31,7 @@ export const projects = [
     title: 'Video Production',
     category: 'Creative Progress',
     year: '2025',
-    image: '/src/assets/works/video.webp',
+    image: videoImg,
     desc: "Telling stories through motion and cinematic visuals.",
     color: "#4e7ab5",
     selected: true,
@@ -37,7 +42,7 @@ export const projects = [
     title: 'Other Explorations',
     category: 'Creativity in Ideas',
     year: '2025',
-    image: '/src/assets/works/others.webp',
+    image: othersImg,
     desc: "A collection of miscellaneous creative experiments.",
     color: "#e64390",
     selected: true,
