@@ -102,7 +102,7 @@ const ScrollColumn = ({ items, direction, speed }) => {
               boxShadow: '0 8px 24px rgba(0,0,0,0.18)',
             }}
           >
-            <img
+            <img loading="lazy"
               src={poster.url}
               alt=""
               style={{
@@ -177,7 +177,7 @@ const ScrollRow = ({ items, direction, speed }) => {
               boxShadow: '0 4px 16px rgba(0,0,0,0.15)',
             }}
           >
-            <img
+            <img loading="lazy"
               src={poster.url}
               alt=""
               style={{

@@ -4,23 +4,23 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './Experience.css'
 
 // Custom Generated Assets
-import expVehicleBody from '../assets/exp_vehicle_body.png'
-import expVehicleBodyDark from '../assets/exp_vehicle_body_dark.png'
-import expWheel from '../assets/exp_wheel.png'
-import milestone0 from '../assets/exp_milestone_0.png'
-import milestone0Night from '../assets/exp_milestone_0(night).png'
-import milestone1 from '../assets/exp_milestone_1.png'
-import milestone1Night from '../assets/exp_milestone_1(night).png'
-import milestone2 from '../assets/exp_milestone_2.png'
-import milestone2Night from '../assets/exp_milestone_2(night).png'
-import milestone3 from '../assets/exp_milestone_3.png'
-import milestone3Night from '../assets/exp_milestone_3(night).png'
-import milestone4 from '../assets/exp_milestone_4.png'
-import milestone4Night from '../assets/exp_milestone_4(night).png'
-import milestone5 from '../assets/exp_milestone_5.png'
-import milestone5Night from '../assets/exp_milestone_5(night).png'
-import expHills from '../assets/exp_hills.png'
-import expVillageScenery from '../assets/exp_village_scenery.png'
+import expVehicleBody from '../assets/exp_vehicle_body.webp'
+import expVehicleBodyDark from '../assets/exp_vehicle_body_dark.webp'
+import expWheel from '../assets/exp_wheel.webp'
+import milestone0 from '../assets/exp_milestone_0.webp'
+import milestone0Night from '../assets/exp_milestone_0(night).webp'
+import milestone1 from '../assets/exp_milestone_1.webp'
+import milestone1Night from '../assets/exp_milestone_1(night).webp'
+import milestone2 from '../assets/exp_milestone_2.webp'
+import milestone2Night from '../assets/exp_milestone_2(night).webp'
+import milestone3 from '../assets/exp_milestone_3.webp'
+import milestone3Night from '../assets/exp_milestone_3(night).webp'
+import milestone4 from '../assets/exp_milestone_4.webp'
+import milestone4Night from '../assets/exp_milestone_4(night).webp'
+import milestone5 from '../assets/exp_milestone_5.webp'
+import milestone5Night from '../assets/exp_milestone_5(night).webp'
+import expHills from '../assets/exp_hills.webp'
+import expVillageScenery from '../assets/exp_village_scenery.webp'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -615,7 +615,7 @@ const Experience = ({ isStudio, isSadMode }) => {
     const isNightVersion = isMilestone0Night || isMilestone1Night || isMilestone2Night || isMilestone3Night || isMilestone4Night || isMilestone5Night
 
     return (
-      <img
+      <img loading="lazy"
         src={imgSrc}
         alt={`Milestone ${index}`}
         className={`milestone-building-img ${isNightVersion ? 'milestone-night-version' : ''}`}
@@ -767,7 +767,7 @@ const Experience = ({ isStudio, isSadMode }) => {
         <div className="car-viewport-pin" ref={carRef}>
           <div className="car-container-internal">
             {/* The Whimsical Hand-Drawn Vehicle Body */}
-            <img src={expVehicleBodyDark} alt="Creative vehicle" className="car-body-image" />
+            <img loading="lazy" src={expVehicleBodyDark} alt="Creative vehicle" className="car-body-image" />
 
             {/* Headlight beam */}
             <svg viewBox="0 0 400 80" className="car-headlight-beam">
@@ -776,11 +776,11 @@ const Experience = ({ isStudio, isSadMode }) => {
 
             {/* Rotating Wheels */}
             <div className="car-wheel wheel-back" ref={wheelBackRef}>
-              <img src={expWheel} alt="Back Wheel" className="car-wheel-img" />
+              <img loading="lazy" src={expWheel} alt="Back Wheel" className="car-wheel-img" />
             </div>
 
             <div className="car-wheel wheel-front" ref={wheelFrontRef}>
-              <img src={expWheel} alt="Front Wheel" className="car-wheel-img" />
+              <img loading="lazy" src={expWheel} alt="Front Wheel" className="car-wheel-img" />
             </div>
 
             {/* Ground Shadow */}

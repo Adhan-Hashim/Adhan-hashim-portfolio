@@ -61,7 +61,7 @@ const SongCarousel = ({ songs, currentIndex, onSelect }) => {
             >
               {/* Cover Image */}
               <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
-                <img 
+                <img loading="lazy" 
                   src={song.cover} 
                   alt={song.title}
                   style={{ 

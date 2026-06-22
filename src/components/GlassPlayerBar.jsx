@@ -40,7 +40,7 @@ const GlassPlayerBar = ({ currentSong, isPlaying, onTogglePlay, onNext, onPrev, 
             flexShrink: 0
           }}
         >
-          <img src={currentSong.cover} alt="cover" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          <img loading="lazy" src={currentSong.cover} alt="cover" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </motion.div>
         <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
           <span style={{ fontSize: '0.8rem', fontWeight: 600, color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{currentSong.title}</span>

@@ -7,9 +7,9 @@ const weaponsList = [
   { name: 'Canva', slug: 'canva' },
   { name: 'After Effects', slug: 'adobeaftereffects' },
   { name: 'VS Code', slug: 'visualstudiocode' },
-  { name: 'Stitch', isGenerated: true, src: '/assets/stitch.png' },
+  { name: 'Stitch', isGenerated: true, src: '/assets/stitch.webp' },
   { name: 'Photoshop', slug: 'adobephotoshop' },
-  { name: 'Antigravity', isGenerated: true, src: '/assets/antigravity.png' },
+  { name: 'Antigravity', isGenerated: true, src: '/assets/antigravity.webp' },
   { name: 'Claude', slug: 'anthropic' },
   { name: 'CapCut', slug: 'capcut' },
   { name: 'Premiere', slug: 'adobepremierepro' },
@@ -45,13 +45,13 @@ const WeaponsSection = ({ isStudio, isSadMode }) => {
             whileHover={{ y: -5 }}
           >
             {item.isGenerated ? (
-              <img 
+              <img loading="lazy" 
                 src={item.src} 
                 alt={item.name} 
                 className={`weapon-icon generated ${isStudio ? 'light' : 'dark'}`} 
               />
             ) : (
-              <img 
+              <img loading="lazy" 
                 src={`https://cdn.simpleicons.org/${item.slug}/${colorParam}`} 
                 alt={item.name} 
                 className="weapon-icon"

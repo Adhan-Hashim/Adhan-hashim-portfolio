@@ -6,10 +6,10 @@ import Footer from './Footer';
 import './WorksPage.css';
 
 // Assets
-import designImg from '../assets/works/design.png';
-import webImg from '../assets/works/web.png';
-import videoImg from '../assets/works/video.png';
-import othersImg from '../assets/works/others.png';
+import designImg from '../assets/works/design.webp';
+import webImg from '../assets/works/web.webp';
+import videoImg from '../assets/works/video.webp';
+import othersImg from '../assets/works/others.webp';
 
 const sections = [
   {
@@ -74,7 +74,7 @@ const WorksPage = ({ isStudio, toggleStudio, isSadMode, isPlaying }) => {
               whileHover={{ scale: 0.98 }}
             >
               <div className="card-bg">
-                <img src={section.img} alt={section.title} className="card-img grayscale" />
+                <img loading="lazy" src={section.img} alt={section.title} className="card-img grayscale" />
                 <div className={`card-shape ${section.shapeClass}`}></div>
               </div>
               

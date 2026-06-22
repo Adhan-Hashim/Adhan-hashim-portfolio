@@ -1,7 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import mePortrait from '../assets/me_ranga.png'
-import littlePortrait from '../assets/little_ranga.png'
+import mePortrait from '../assets/me_ranga.webp'
+import littlePortrait from '../assets/little_ranga.webp'
 import EyeO from './EyeO'
 import './Hero.css'
 

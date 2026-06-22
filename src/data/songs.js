@@ -1,8 +1,8 @@
-import happensToYouCover from '../assets/covers/happens_to_you.png';
-import kabiraCover from '../assets/covers/kabira.png';
-import kadalalleCover from '../assets/covers/kadalalle.png';
-import ninKoodeCover from '../assets/covers/nin_koode.png';
-import kadhaippomaCover from '../assets/covers/kadhaippoma.png';
+import happensToYouCover from '../assets/covers/happens_to_you.webp';
+import kabiraCover from '../assets/covers/kabira.webp';
+import kadalalleCover from '../assets/covers/kadalalle.webp';
+import ninKoodeCover from '../assets/covers/nin_koode.webp';
+import kadhaippomaCover from '../assets/covers/kadhaippoma.webp';
 
 export const SONGS = [
   {

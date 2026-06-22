@@ -315,7 +315,7 @@ const WorksSectionPage = ({ isStudio, toggleStudio, isSadMode, isPlaying }) => {
                   cursor: 'crosshair',
                   transformOrigin: 'center center'
                 }}>
-                  <img src={poster.url} alt={`Poster ${poster.id}`} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  <img loading="lazy" src={poster.url} alt={`Poster ${poster.id}`} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                 </motion.div>
               ))}
             </div>

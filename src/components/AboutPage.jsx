@@ -9,8 +9,8 @@ import { GitHubCalendar } from 'react-github-calendar';
 
 // Assets
 import about1 from '../assets/about/about 1.mp4';
-import meImg from '../assets/about_adhan.png';
-import socialImage from '../assets/social_adhan.png';
+import meImg from '../assets/about_adhan.webp';
+import socialImage from '../assets/social_adhan.webp';
 
 const InteractiveConnect = ({ isStudio }) => {
   const [hoveredSocial, setHoveredSocial] = useState(null);
@@ -80,7 +80,7 @@ const InteractiveConnect = ({ isStudio }) => {
         maskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
         WebkitMaskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)'
       }}>
-        <img src={socialImage} alt="Socials" style={{ width: '100%', height: 'auto', display: 'block' }} />
+        <img loading="lazy" src={socialImage} alt="Socials" style={{ width: '100%', height: 'auto', display: 'block' }} />
 
         {socials.map((social) => (
           <div
@@ -319,7 +319,7 @@ const AboutPage = ({ isStudio, toggleStudio, isSadMode, isPlaying }) => {
                 transition={{ duration: 1, ease: "easeOut" }}
                 style={{ y: yImg, rotate: rotateImg, position: 'relative', marginTop: '-90px' }}
               >
-                <img
+                <img loading="lazy"
                   src={meImg}
                   alt="Adhan"
                   className="hero-illustration"

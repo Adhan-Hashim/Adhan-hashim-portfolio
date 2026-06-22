@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import experienceImg from '../assets/experience adhan.png';
+import experienceImg from '../assets/experience adhan.webp';
 import './ExperiencePage.css';
 
 const timelineData = [
@@ -74,7 +74,7 @@ const ExperiencePage = ({ isStudio, toggleStudio, isSadMode, isPlaying }) => {
             transition={{ duration: 0.8 }}
             style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
           >
-            <img
+            <img loading="lazy"
               src={experienceImg}
               style={{
                 width: 'var(--exp-page-img-width, 320px)',
