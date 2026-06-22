@@ -17,10 +17,12 @@
 }
 
 .roadmap-title {
-  font-size: 50px;
+  font-size: clamp(2.2rem, 8vw, 50px);
   font-weight: 900;
   letter-spacing: -1px;
   margin-bottom: 10px;
+  text-align: center;
+  line-height: 1.1;
 }
 
 .roadmap-subtitle {
@@ -105,7 +107,7 @@
 }
 
 .roadmap-role {
-  font-size: 1.8rem;
+  font-size: clamp(1.4rem, 6vw, 1.8rem);
   font-weight: 800;
   margin-bottom: 5px;
   line-height: 1.2;
@@ -163,21 +165,23 @@
     --exp-page-img-display: none;
   }
   .roadmap-svg-wrapper {
-    left: 20px;
-    transform: none;
-    width: 100px;
+    display: none;
   }
 
   .roadmap-svg {
-    /* Straighten out or hide curves for mobile, just use a straight line */
+    /* Hide curves for mobile */
     display: none;
+  }
+
+  .roadmap-header {
+    margin-bottom: 40px;
   }
 
   .roadmap-container::before {
     content: '';
     position: absolute;
     top: 0;
-    left: 30px;
+    left: 9px;
     width: 2px;
     height: 100%;
     background: var(--accent-color);
@@ -185,9 +189,9 @@
   }
 
   .roadmap-nodes-container {
-    gap: 50px;
-    padding-left: 60px;
-    padding-right: 20px;
+    gap: 40px;
+    padding-left: 40px;
+    padding-right: 15px;
   }
 
   .roadmap-node-wrapper.align-left,
@@ -197,12 +201,20 @@
 
   .roadmap-card {
     width: 100%;
+    padding: 25px 20px;
   }
 
   .roadmap-dot,
   .align-left .roadmap-dot,
   .align-right .roadmap-dot {
-    left: -45px;
+    left: -40px;
     right: auto;
+    width: 20px;
+    height: 20px;
+  }
+
+  .dot-inner {
+    width: 8px;
+    height: 8px;
   }
 }
