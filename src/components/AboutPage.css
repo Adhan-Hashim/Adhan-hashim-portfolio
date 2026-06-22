@@ -762,9 +762,17 @@
   .about-bento-grid {
     grid-template-columns: 1fr;
   }
+
+  .github-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+    margin-bottom: 30px;
+  }
   
   .github-title-new {
     font-size: 1.5rem;
+    text-align: center;
   }
 
   /* SIDE-BY-SIDE MOBILE LAYOUT FOR ID CARD & EDUCATION */
