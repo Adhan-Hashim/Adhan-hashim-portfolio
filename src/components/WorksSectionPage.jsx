@@ -66,6 +66,14 @@ const WorksSectionPage = ({ isStudio, toggleStudio, isSadMode, isPlaying }) => {
   const sectionProjects = {
     dev: [
       {
+        title: "OkaySpace",
+        desc: "A Multimodal Neural Operating System for Your Mental Wellbeing with real-time facial emotion recognition.",
+        link: "https://github.com/Adhan-Hashim/OkaySpace",
+        linkText: "View on GitHub",
+        liveLink: "https://okay-space.vercel.app/",
+        liveLinkText: "Live Demo"
+      },
+      {
         title: "somojo",
         desc: "A JavaScript project focusing on dynamic content and functionality.",
         link: "https://github.com/Adhan-Hashim/somojo",
@@ -84,12 +92,6 @@ const WorksSectionPage = ({ isStudio, toggleStudio, isSadMode, isPlaying }) => {
         linkText: "View on GitHub",
         liveLink: "https://swara-8fq.pages.dev/",
         liveLinkText: "Live Demo"
-      },
-      {
-        title: "OkaySpace",
-        desc: "A JavaScript-based project exploring interactive web applications.",
-        link: "https://github.com/Adhan-Hashim/OkaySpace",
-        linkText: "View on GitHub"
       },
       {
         title: "jango",
