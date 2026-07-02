@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const SongCarousel = ({ songs, currentIndex, onSelect }) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize(); // initial check
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <div style={{
       position: 'relative',
@@ -11,7 +20,7 @@ const SongCarousel = ({ songs, currentIndex, onSelect }) => {
       alignItems: 'center',
       justifyContent: 'center',
       perspective: '1200px',
-      overflow: 'visible',
+      overflow: 'hidden', // prevent horizontal scroll
       marginTop: '2vh'
     }}>
       <AnimatePresence mode="popLayout">
@@ -31,15 +40,18 @@ const SongCarousel = ({ songs, currentIndex, onSelect }) => {
           
           if (absOffset > 2) return null;
 
+          const xOffsetBase = isMobile ? 100 : 180;
+          const initialXOffsetBase = isMobile ? 120 : 200;
+
           return (
             <motion.div
               key={song.id}
               onClick={() => onSelect(index)}
-              initial={{ opacity: 0, scale: 0.8, x: offset * 200 }}
+              initial={{ opacity: 0, scale: 0.8, x: offset * initialXOffsetBase }}
               animate={{
                 opacity: 1 - absOffset * 0.25,
                 scale: isActive ? 1 : 0.7 - absOffset * 0.1,
-                x: offset * 180,
+                x: offset * xOffsetBase,
                 z: isActive ? 50 : -absOffset * 100,
                 rotateY: offset * -20,
                 zIndex: songs.length - absOffset,
